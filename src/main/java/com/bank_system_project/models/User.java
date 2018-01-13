@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,23 @@ public class User {
     private Long id;
     @Size(min = 4, max = 36)
     private String username;
+    @Size(min = 4, max = 36)
     private String password;
-    @Transient//nie będzie odwzorowana w db
+    @Size(min = 4, max = 36)
+    private String firstname;
+    @Size(min = 2, max = 36)
+    private String surname;
+    @Size(min = 4, max = 36)
+    private String emial;
+    private BigDecimal means;
+    @Column(name = "account_number")
+    private String accountNumber;
+    @Size(min = 4, max = 36)
+    private String adress;
+
+
+
+    @Transient
     private String passwordConfirm;
     private boolean enabled = false;
 
