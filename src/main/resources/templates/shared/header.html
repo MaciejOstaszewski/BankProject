@@ -22,6 +22,35 @@
             </div>
 
             <div id="navbar" class="collapse navbar-collapse ">
+
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/transfers.html}">Przelewy</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/topUpForm.html}">Doładowania</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/cashFlow.html}">Przepływy</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/transactionHistory.html}">Historia Transakcji</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a th:href="@{/messages.html}">Wiadomości</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/messagesForm.html}">Nowa wiadomość</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/userAccept.html}">Odblokuj użytkownika</a>
+                    </li>
+
+                </ul>
+
+
+
                 <ul class="nav navbar-nav navbar-right">
                     <li sec:authorize="isAnonymous()">
                         <a th:href="@{/registrationForm.html}">Zarejestruj</a>

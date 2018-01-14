@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 
 @Controller
@@ -37,7 +38,7 @@ public class UserRegistrationFormController {
         if (bindingResult.hasErrors()) {
             return "registrationForm";
         }
-        userService.save(userForm);
+        userService.save(userService.fillNewUser(userForm));
         return "registrationSuccess";
     }
 

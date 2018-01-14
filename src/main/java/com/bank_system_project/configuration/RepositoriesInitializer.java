@@ -1,6 +1,8 @@
 package com.bank_system_project.configuration;
 
 
+
+import com.bank_system_project.models.MobileNetwork;
 import com.bank_system_project.models.Role;
 import com.bank_system_project.models.User;
 
@@ -25,6 +27,9 @@ public class RepositoriesInitializer {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MobileNetworkRepository mobileNetworkRepository;
+
     @Bean
     InitializingBean init() {
 
@@ -45,6 +50,20 @@ public class RepositoriesInitializer {
 
 
                     userRepository.save(admin);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            if (mobileNetworkRepository.findAll().isEmpty()) {
+                try {
+
+                    mobileNetworkRepository.save(new MobileNetwork("Play"));
+                    mobileNetworkRepository.save(new MobileNetwork("Orange"));
+                    mobileNetworkRepository.save(new MobileNetwork("T-Mobile"));
+                    mobileNetworkRepository.save(new MobileNetwork("Plus"));
+                    mobileNetworkRepository.save(new MobileNetwork("New-Mobile"));
 
                 }catch(Exception e){
                     e.printStackTrace();

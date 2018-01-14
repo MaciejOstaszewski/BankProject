@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona domowa</title>
 </head>
 <body>
+<div th:replace="shared/header :: header('home')"/>
 
+<div id="main" class="container">
+    <h1>Lista nieodblokowanych użytkowników</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>emial</th>
+            <th>adres</th>
+            <th></th>
+
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${disabledUsers}">
+
+
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.firstname}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.emial}"></td>
+            <td th:text="${user.adress}"></td>
+            <td>
+                <a class="btn btn-danger" th:href="@{userAccept.html(eid=${user.id})}">Odblokuj</a>
+                <a class="btn btn-success" th:href="@{userAccept.html(did=${user.id})}">Usuń</a>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
 </body>
 </html>

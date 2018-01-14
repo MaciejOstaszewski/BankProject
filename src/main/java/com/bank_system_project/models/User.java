@@ -22,8 +22,7 @@ public class User {
     private Long id;
     @Size(min = 4, max = 36)
     private String username;
-    @Size(min = 4, max = 36)
-    private String password;
+
     @Size(min = 4, max = 36)
     private String firstname;
     @Size(min = 2, max = 36)
@@ -38,6 +37,7 @@ public class User {
 
 
 
+    private String password;
     @Transient
     private String passwordConfirm;
     private boolean enabled = false;

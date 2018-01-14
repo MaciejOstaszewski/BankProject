@@ -10,7 +10,19 @@
 <div id="main" class="container">
     <span style="font-size: 30pt">
         Strona główna
-        asd
+
+        <h1>Twoje środki: [[${#numbers.formatDecimal(means,1,2,'COMMA')}]] PLN</h1>
+
+                <div th:if="${param.topUpSuccess}">
+                    <div class="alert alert-info">
+                        Dodano doładowanie
+                    </div>
+                </div>
+                <div th:if="${param.transferSuccess}">
+                    <div class="alert alert-info">
+                        Dodano przelew
+                    </div>
+                </div>
     </span>
 </div>
 <div th:replace="shared/footer :: footer"></div>
