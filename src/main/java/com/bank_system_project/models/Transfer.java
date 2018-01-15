@@ -44,6 +44,10 @@ public class Transfer {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "status")
+    private String status;
+
+
     @Column(name = "repeat")
     private boolean repeat;
 

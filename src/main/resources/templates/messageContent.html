@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona domowa</title>
 </head>
 <body>
+<div th:replace="shared/header :: header('home')"/>
 
+<div id="main" class="container">
+    <h1 th:text="${messageContent.messageTitle} + ' ' + ${#dates.format(messageContent.sendDate, 'dd-MM-yyyy')}"></h1>
+    <h2 th:text="${messageContent.messageContent}"></h2>
+</div>
+<div th:replace="shared/footer :: footer"></div>
 </body>
 </html>

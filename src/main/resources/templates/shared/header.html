@@ -34,12 +34,7 @@
                     <li sec:authorize="isAuthenticated()">
                         <a th:href="@{/cashFlow.html}">Przepływy</a>
                     </li>
-                    <li sec:authorize="isAuthenticated()">
-                        <a th:href="@{/cashFlow.html}">asdsda</a>
-                    </li>
-                    <li sec:authorize="isAuthenticated()">
-                        <a th:href="@{/cashFlow.html}">asdasdasddsda</a>
-                    </li>
+
                     <li sec:authorize="isAuthenticated()">
                         <a th:href="@{/transactionHistory.html}">Historia Transakcji</a>
                     </li>
@@ -47,7 +42,7 @@
                         <a th:href="@{/messages.html}">Wiadomości</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a th:href="@{/messagesForm.html}">Nowa wiadomość</a>
+                        <a th:href="@{/messageForm.html}">Nowa wiadomość</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a th:href="@{/userAccept.html}">Odblokuj użytkownika</a>

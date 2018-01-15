@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Przelewy</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <div th:if="${messagesList.size()} != 0">
+        <h1>Lista Wiadomości</h1>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Tytuł</th>
+                <th>Data</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${messagesList}">
+
+
+
+                        <td><a th:href="@{messages.html(cid=${message.id})}">[[${message.messageTitle}]]</a></td>
+                        <td th:text="${#dates.format(message.sendDate, 'dd-MM-yyyy')}"></td>
+                        <td><a class="btn btn-danger" th:href="@{messages.html(did=${message.id})}">Usuń</a></td>
+
+
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

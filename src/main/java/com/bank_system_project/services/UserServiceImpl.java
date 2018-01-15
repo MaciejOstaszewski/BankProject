@@ -133,4 +133,14 @@ public class UserServiceImpl implements UserService {
         return getCurrentLoggedUser().getMeans();
     }
 
+    @Override
+    public com.bank_system_project.models.User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
 }
