@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+
+    <div th:replace="shared/header :: header-css"/>
+    <title>Nowy przelew</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="container">
+
+    <h1>Nowe Doładowanie</h1>
+    <form th:method="POST" th:object="${message}" th:action="@{/messageForm.html}">
+        <fieldset>
+
+            <div class="form-group">
+                <label for="messageTitle">Tytuł wiadomości </label>
+                <input id="messageTitle" type="text" th:field="*{phoneNumber}" required="true" placeholder="tytuł" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="messageContent">Treść wiadomości </label>
+                <textarea id="messageContent" type="text" th:field="*{repeatPhoneNumber}" required="true" placeholder="treść" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="userEmail">Email odbiorcy </label>
+                <input id="userEmail" type="email" th:field="*{phoneNumber}" required="true" placeholder="email" class="form-control"/>
+            </div>
+
+
+            <div>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Wyślij"/>
+            </div>
+            <input type="hidden" th:field="*{id}"/>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+
+
+        </fieldset>
+    </form>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

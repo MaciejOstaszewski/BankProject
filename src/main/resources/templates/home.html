@@ -11,7 +11,7 @@
     <span style="font-size: 30pt">
         Strona główna
 
-        <h1>Twoje środki: [[${#numbers.formatDecimal(means,1,2,'COMMA')}]] PLN</h1>
+        <h1 sec:authorize="hasRole('ROLE_USER')">Twoje środki: [[${#numbers.formatDecimal(means,1,2,'COMMA')}]] PLN</h1>
 
                 <div th:if="${param.topUpSuccess}">
                     <div class="alert alert-info">
