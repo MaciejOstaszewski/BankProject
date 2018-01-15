@@ -17,17 +17,17 @@
 
             <div class="form-group">
                 <label for="messageTitle">Tytuł wiadomości </label>
-                <input id="messageTitle" type="text" th:field="*{phoneNumber}" required="true" placeholder="tytuł" class="form-control"/>
+                <input id="messageTitle" type="text" th:field="*{messageTitle}" required="true" placeholder="tytuł" class="form-control"/>
             </div>
 
             <div class="form-group">
                 <label for="messageContent">Treść wiadomości </label>
-                <textarea id="messageContent" type="text" th:field="*{repeatPhoneNumber}" required="true" placeholder="treść" class="form-control"/>
+                <textarea id="messageContent" type="text" th:field="*{messageContent}" required="true" placeholder="treść" class="form-control"/>
             </div>
 
             <div class="form-group">
                 <label for="userEmail">Email odbiorcy </label>
-                <input id="userEmail" type="email" th:field="*{phoneNumber}" required="true" placeholder="email" class="form-control"/>
+                <input id="userEmail" type="email" th:field="*{user.username}" required="true" placeholder="email" class="form-control"/>
             </div>
 
 

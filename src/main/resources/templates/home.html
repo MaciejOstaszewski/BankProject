@@ -9,7 +9,7 @@
 
 <div id="main" class="container">
     <span style="font-size: 30pt">
-        Sigigy
+        Strona główna
 
         <h1 sec:authorize="hasRole('ROLE_USER')">Twoje środki: [[${#numbers.formatDecimal(means,1,2,'COMMA')}]] PLN</h1>
 
@@ -21,6 +21,11 @@
                 <div th:if="${param.transferSuccess}">
                     <div class="alert alert-info">
                         Dodano przelew
+                    </div>
+                </div>
+                <div th:if="${param.newMessageSuccess}">
+                    <div class="alert alert-info">
+                        Pomyślnie wysłano wiadomość
                     </div>
                 </div>
     </span>

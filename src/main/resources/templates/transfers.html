@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="shared/header :: header-css"/>
     <title>Przelewy</title>
@@ -13,8 +13,45 @@
         <a th:href="@{/transferForm.html}" class="btn btn-lg btn-primary btn-block">Nowy Szablon</a>
         <a th:href="@{/transferForm.html}" class="btn btn-lg btn-primary btn-block">Nowe Zlecenie stałe</a>
     </div>
-    <h1>Lista przelewów</h1>
+    <div th:if="${transfersList.size()} != 0">
+        <h1>Lista przelewów</h1>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Obbiorca</th>
+                <th>Numer konta</th>
+                <th>Kwota</th>
+                <th>Tytuł</th>
+                <th>Data wykonania</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transfer : ${transfersList}">
 
+
+                <td th:text="${transfer.recipientsNameAndAdress}"></td>
+                <td th:text="${transfer.recipientsAccount}"></td>
+                <td th:text="${transfer.amount}"></td>
+                <td th:text="${transfer.title}"></td>
+                <td th:text="${#dates.format(transfer.executionDate, 'dd-MM-yyyy')}"></td>
+                <td th:text="${transfer.status}"></td>
+                <td><a class="btn btn-primary" th:href="@{transfers.html(sid=${transfer.id})}">Wyślij</a></td>
+                <td><a class="btn btn-success" th:href="@{transfers.html(eid=${transfer.id})}">Edytuj</a></td>
+                <td><a class="btn btn-danger" th:href="@{transfers.html(did=${transfer.id})}">Usuń</a></td>
+
+
+
+
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
 </div>
 <div th:replace="shared/footer :: footer"></div>
 </body>

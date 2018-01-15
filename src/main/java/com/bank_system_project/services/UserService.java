@@ -31,5 +31,8 @@ public interface UserService extends UserDetailsService {
 
     BigDecimal getUserMeans();
 
+    User getUserByUsername(String username);
+
+    String getUsername();
 
 }

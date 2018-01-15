@@ -4,6 +4,7 @@ package com.bank_system_project.controllers;
 import com.bank_system_project.models.Transfer;
 import com.bank_system_project.services.TransactionsHistoryService;
 import com.bank_system_project.services.TransferService;
+import com.bank_system_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,16 @@ public class TransferController {
     @Autowired
     TransactionsHistoryService transactionsHistoryService;
 
+    @Autowired
+    UserService userService;
 
-    @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
-    public String transfers(Model model){
-
-
-
-        return "transfers.html";
-    }
+//    @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
+//    public String transfers(Model model){
+//
+//
+//
+//        return "transfers.html";
+//    }
 
     @RequestMapping(value = "/transferForm.html", method = RequestMethod.GET)
     public String transferForm(Model model){
@@ -43,7 +46,19 @@ public class TransferController {
     public String processTransferForm(@ModelAttribute("transfer") Transfer t){
         t.setExecutionDate(new Date());
         t.setRepeat(false);
-//        transferService.save(t);
+        t.setStatus("Oczekujący");
+        t.setUser(userService.getCurrentLoggedUser());
+        transferService.save(t);
         return "redirect:/?transferSuccess";
     }
+
+    @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
+    public String transferList(Model model){
+
+        model.addAttribute("transfersList", transferService.getCurrentLoggedUserTransfers(userService.getUsername()));
+
+        return "transfers.html";
+    }
+
+
 }
