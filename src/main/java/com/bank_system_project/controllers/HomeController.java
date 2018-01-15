@@ -18,5 +18,5 @@ public class HomeController {
         model.addAttribute("means", userService.getUserMeans());
         return "home";
     }
-
+            // TEST TEST
 }
