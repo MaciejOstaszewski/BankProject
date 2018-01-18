@@ -9,11 +9,12 @@
 
 <div id="main" class="container">
 
-    <div th:if="${transfersList.size()} != 0">
+    <div th:if="${transactionsHistoryList.size()} != 0">
         <h1>Historia Transakcjii</h1>
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
+                <th>Typ transakcji</th>
                 <th>Odbiorca</th>
                 <th>Numer konta odbiorcy</th>
                 <th>Kwota</th>
@@ -23,7 +24,7 @@
             </thead>
             <tbody>
             <tr th:each="history : ${transactionsHistoryList}">
-
+                <td th:text="${history.transactionType}"></td>
                 <td th:text="${history.recipient}"></td>
                 <td th:text="${history.recipientsAccount}"></td>
                 <td th:text="${history.amount}"></td>

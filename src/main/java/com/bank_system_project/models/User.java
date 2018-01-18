@@ -20,32 +20,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     @Size(min = 4, max = 36)
     private String username;
 
-    @Size(min = 4, max = 36)
-    private String firstname;
-    @Size(min = 2, max = 36)
-    private String surname;
-    @Size(min = 4, max = 36)
-    private String emial;
-    private BigDecimal means;
-    @Column(name = "account_number")
-    private String accountNumber;
-    @Size(min = 4, max = 36)
-    private String adress;
-
-
-
     private String password;
-    @Transient
-    private String passwordConfirm;
+
     private boolean enabled = false;
 
-    @AssertTrue
-    private boolean isPasswordsEquals(){
-        return password == null || passwordConfirm == null || password.equals(passwordConfirm);
-    }
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_details_id")
+    private UserDetails userDetails;
+
+
+
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

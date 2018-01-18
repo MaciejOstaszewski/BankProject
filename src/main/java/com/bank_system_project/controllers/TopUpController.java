@@ -1,12 +1,8 @@
 package com.bank_system_project.controllers;
 
 
-import com.bank_system_project.models.MobileNetwork;
-import com.bank_system_project.models.TopUp;
-import com.bank_system_project.models.Transfer;
-import com.bank_system_project.services.TopUpService;
-import com.bank_system_project.services.TransactionsHistoryService;
-import com.bank_system_project.services.TransferService;
+import com.bank_system_project.models.*;
+import com.bank_system_project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -33,6 +31,12 @@ public class TopUpController {
     @Autowired
     TransactionsHistoryService transactionsHistoryService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @RequestMapping(value = "/topUpForm.html", method = RequestMethod.GET)
     public String topUpForm(Model model){
 
@@ -42,14 +46,25 @@ public class TopUpController {
     }
 
     @RequestMapping(value = "/topUpForm.html", method = RequestMethod.POST)
-    public String processTopUpForm(@ModelAttribute("topUp") TopUp t, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "topUpForm";
+    public String processTopUpForm(Model model, @Valid @ModelAttribute("topUp") TopUp t, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "topUpForm.html";
         }
 
+        if (t.getAmount().compareTo(userService.getCurrentLoggedUser().getUserDetails().getMeans()) > 0){
+
+            return "redirect:/?transferErr";
+        }
 
         t.setExecutionDate(new Date());
-//        topUpService.save(t);
+        User user = userService.getCurrentLoggedUser();
+        UserDetails userDetails = userDetailsService.getOne(user.getUserDetails().getId());
+        userDetails.setMeans(userDetails.getMeans().subtract(t.getAmount()));
+        userDetailsService.save(userDetails);
+        t.setUser(user);
+
+        transactionsHistoryService.save(t);
+        topUpService.save(t);
 
 
         return "redirect:/?topUpSuccess";

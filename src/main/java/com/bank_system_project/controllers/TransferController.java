@@ -2,8 +2,11 @@ package com.bank_system_project.controllers;
 
 
 import com.bank_system_project.models.Transfer;
+import com.bank_system_project.models.User;
+import com.bank_system_project.models.UserDetails;
 import com.bank_system_project.services.TransactionsHistoryService;
 import com.bank_system_project.services.TransferService;
+import com.bank_system_project.services.UserDetailsService;
 import com.bank_system_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,8 @@ public class TransferController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/transferForm.html", params = "repeat", method = RequestMethod.GET)
     public String transferRepeatForm(Model model, boolean repeat){
@@ -45,7 +50,7 @@ public class TransferController {
 
         t.setStatus("Oczekujący");
         t.setUser(userService.getCurrentLoggedUser());
-//        transferService.save(t);
+        transferService.save(t);
         return "redirect:/?transferSuccess";
     }
 
@@ -55,6 +60,46 @@ public class TransferController {
         model.addAttribute("transfersList", transferService.getCurrentLoggedUserTransfers(userService.getUsername()));
 
         return "transfers.html";
+    }
+
+
+    @RequestMapping(value = "/transfers.html", params = "sid", method = RequestMethod.GET)
+    public String sendTransfer(Model model, long sid){
+
+
+        Transfer transfer = transferService.getOne(sid);
+
+        if (transfer.getAmount().compareTo(userService.getCurrentLoggedUser().getUserDetails().getMeans()) > 0){
+            model.addAttribute("transfer", transfer);
+
+            return "redirect:transfers.html?transferErr";
+        }
+        transfer.setStatus("Wysłany");
+        UserDetails userDetails = userDetailsService.getOne(userService.getCurrentLoggedUser().getUserDetails().getId());
+        userDetails.setMeans(userDetails.getMeans().subtract(transfer.getAmount()));
+        userDetailsService.save(userDetails);
+
+        transactionsHistoryService.save(transfer);
+
+
+        transferService.save(transfer);
+
+
+        return "redirect:/?transferSendSuccess";
+    }
+    @RequestMapping(value = "/transfers.html", params = "did", method = RequestMethod.GET)
+    public String deleteTransfer(Model model, long did){
+
+        transferService.delete(did);
+
+        return "redirect:/transfers.html";
+    }
+    @RequestMapping(value = "/transfers.html", params = "eid", method = RequestMethod.GET)
+    public String editTransfer(Model model, long eid){
+
+        model.addAttribute("transfer", transferService.getOne(eid));
+
+        return "transferForm.html";
     }
 
 

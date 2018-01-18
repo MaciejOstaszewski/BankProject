@@ -10,8 +10,12 @@
 <div th:replace="shared/header :: header('home')"/>
 
 <div class="container">
-
-    <h1>Nowe Doładowanie</h1>
+    <div th:if="${param.userNotExist}">
+        <div class="alert alert-info">
+            Użytkownik to takim emailu nie istnieje!
+        </div>
+    </div>
+    <h1>Nowa Wiadomość</h1>
     <form th:method="POST" th:object="${message}" th:action="@{/messageForm.html}">
         <fieldset>
 

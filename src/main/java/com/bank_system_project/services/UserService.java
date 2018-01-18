@@ -23,7 +23,7 @@ public interface UserService extends UserDetailsService {
 
     User getUserById(long id);
 
-    String generateAccountNumber();
+
 
     User fillNewUser(User user);
 
@@ -34,5 +34,7 @@ public interface UserService extends UserDetailsService {
     User getUserByUsername(String username);
 
     String getUsername();
+
+    boolean isExist(long id);
 
 }

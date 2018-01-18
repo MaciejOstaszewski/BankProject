@@ -8,7 +8,9 @@
 <div th:replace="shared/header :: header('home')"/>
 
 <div id="main" class="container">
-
+    <div th:if="${messagesList.size()} == 0">
+        <h1>Brak Wiadomości</h1>
+    </div>
     <div th:if="${messagesList.size()} != 0">
         <h1>Lista Wiadomości</h1>
         <table class="table table-striped">
@@ -20,6 +22,7 @@
             </tr>
             </thead>
             <tbody>
+
             <tr th:each="message : ${messagesList}">
 
 

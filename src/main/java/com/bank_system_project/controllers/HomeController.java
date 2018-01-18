@@ -15,7 +15,7 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String showHomeSite(Model model) {
-        model.addAttribute("means", userService.getUserMeans());
+        model.addAttribute("means", userService.getCurrentLoggedUser().getUserDetails().getMeans());
         return "home";
     }
             // TEST TEST

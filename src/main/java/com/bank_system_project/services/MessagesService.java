@@ -8,6 +8,8 @@ public interface MessagesService {
 
     void save(Messages messages);
 
+    void delete(long id);
+
     List<Messages> getAllUserMessages(String username);
 
     Messages getMessage(long id);

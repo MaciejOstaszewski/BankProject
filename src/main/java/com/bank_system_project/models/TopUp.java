@@ -50,7 +50,7 @@ public class TopUp {
     @Column(name = "execution_date")
     private Date executionDate;
 
-    @AssertTrue
+    @AssertTrue(message = "Numery telefonu są różne")
     private boolean isNumbersEquals(){
         return phoneNumber == null || repeatPhoneNumber == null || phoneNumber.equals(repeatPhoneNumber);
     }

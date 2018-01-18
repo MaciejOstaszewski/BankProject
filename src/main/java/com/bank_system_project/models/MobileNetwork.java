@@ -18,7 +18,7 @@ public class MobileNetwork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private int id;
+    private long id;
 
 
     @Column(name = "name", nullable = false)

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+
+    <div th:replace="shared/header :: header-css"/>
+    <title>Nowy szablon</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="container">
+
+
+
+    <h1>Nowy szablon</h1>
+    <form th:method="POST" th:object="${transferTemplate}" th:action="@{/transferTemplateForm.html}">
+        <fieldset>
+            <div class="form-group">
+                <label for="templateName">Nazwa szablonu </label>
+                <input id="templateName" type="text" th:field="*{templateName}" required="true" placeholder="Nazwa szablonu" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="reciver">Nazwa i adres odbiorcy </label>
+                <input id="reciver" type="text" th:field="*{recipientsNameAndAdress}" required="true" placeholder="Odbiorca" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="recipientsAccount">Rachunek odbiorcy </label>
+                <input id="recipientsAccount" type="number" th:field="*{recipientsAccount}" required="true" placeholder="Rachunek odbiorcy" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="amount">Kwota </label>
+                <input id="amount" type="number" th:field="*{amount}" required="true" placeholder="0" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="title">Tytuł przelewu </label>
+                <input id="title" type="text" th:field="*{title}" required="true" placeholder="Tytuł" class="form-control"/>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Dodaj"/>
+            </div>
+            <input type="hidden" th:field="*{id}"/>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+
+
+        </fieldset>
+    </form>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

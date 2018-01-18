@@ -1,7 +1,10 @@
 body {
     background-color: #121212;
+    color: #888d94;
 }
-
+td{
+    text-align: center;
+}
 #main {
     width: 630px;
 

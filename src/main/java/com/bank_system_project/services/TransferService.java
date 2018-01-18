@@ -8,7 +8,9 @@ public interface TransferService {
 
     void save(Transfer transfer);
 
-    void saveTopUp(Transfer transfer);
+    void delete(long id);
 
     List<Transfer> getCurrentLoggedUserTransfers(String username);
+
+    Transfer getOne(long id);
 }
