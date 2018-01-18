@@ -22,7 +22,6 @@ public class TransactionsHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String sender;
 
     private String recipient;
 

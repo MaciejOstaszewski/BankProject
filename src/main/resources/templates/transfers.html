@@ -9,16 +9,16 @@
 
 <div id="main" class="container">
     <div>
-        <a th:href="@{/transferForm.html}" class="btn btn-lg btn-primary btn-block">Nowy Przelew</a>
+        <a th:href="@{/transferForm.html(repeat=false)}" class="btn btn-lg btn-primary btn-block">Nowy Przelew</a>
         <a th:href="@{/transferForm.html}" class="btn btn-lg btn-primary btn-block">Nowy Szablon</a>
-        <a th:href="@{/transferForm.html}" class="btn btn-lg btn-primary btn-block">Nowe Zlecenie stałe</a>
+        <a th:href="@{/transferForm.html(repeat=true)}" class="btn btn-lg btn-primary btn-block">Nowe Zlecenie stałe</a>
     </div>
     <div th:if="${transfersList.size()} != 0">
         <h1>Lista przelewów</h1>
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>Obbiorca</th>
+                <th>Odbiorca</th>
                 <th>Numer konta</th>
                 <th>Kwota</th>
                 <th>Tytuł</th>

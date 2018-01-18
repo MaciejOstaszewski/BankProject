@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class TransferController {
@@ -26,29 +28,24 @@ public class TransferController {
     @Autowired
     UserService userService;
 
-//    @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
-//    public String transfers(Model model){
-//
-//
-//
-//        return "transfers.html";
-//    }
 
-    @RequestMapping(value = "/transferForm.html", method = RequestMethod.GET)
-    public String transferForm(Model model){
+    @RequestMapping(value = "/transferForm.html", params = "repeat", method = RequestMethod.GET)
+    public String transferRepeatForm(Model model, boolean repeat){
 
-        model.addAttribute("transfer", new Transfer());
+        model.addAttribute("transfer", new Transfer(repeat));
 
         return "transferForm.html";
     }
 
+
     @RequestMapping(value = "/transferForm.html", method = RequestMethod.POST)
     public String processTransferForm(@ModelAttribute("transfer") Transfer t){
+
         t.setExecutionDate(new Date());
-        t.setRepeat(false);
+
         t.setStatus("Oczekujący");
         t.setUser(userService.getCurrentLoggedUser());
-        transferService.save(t);
+//        transferService.save(t);
         return "redirect:/?transferSuccess";
     }
 
