@@ -51,6 +51,7 @@ public class Transfer {
     @Column(name = "repeat")
     private boolean repeat;
 
-
-
+    public Transfer(boolean repeat) {
+        this.repeat = repeat;
+    }
 }
