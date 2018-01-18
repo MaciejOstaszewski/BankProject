@@ -6,6 +6,7 @@ import com.bank_system_project.models.User;
 import com.bank_system_project.services.MessagesService;
 import com.bank_system_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +24,7 @@ public class MessageController {
     @Autowired
     UserService userService;
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/messageForm.html", method = RequestMethod.GET)
     public String messageForm(Model model){
 
@@ -33,6 +35,10 @@ public class MessageController {
 
     @RequestMapping(value = "/messageForm.html", method = RequestMethod.POST)
     public String processMessageForm(@ModelAttribute("message") Messages m){
+        if (userService.getUserByUsername(m.getUser().getUsername()) == null ) {
+            return "redirect:messageForm.html?userNotExist";
+        }
+
         User user = userService.getUserByUsername(m.getUser().getUsername());
         m.setUser(user);
         m.setSendDate(new Date());
@@ -56,5 +62,11 @@ public class MessageController {
         model.addAttribute("messageContent", messagesService.getMessage(cid));
 
         return "messageContent";
+    }
+
+    @RequestMapping(value = "/messages.html", params = "did", method = RequestMethod.GET)
+    public String deleteMessagelong(long did){
+        messagesService.delete(did);
+        return "redirect:messages.html";
     }
 }

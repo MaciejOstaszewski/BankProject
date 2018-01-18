@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
         List roles = Arrays.asList(userRole);
         user.setRoles(new HashSet<>(roles));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordConfirm(null);//wyzerowanie jest potrzebne ze względu na walidację
         userRepository.saveAndFlush(user);
     }
 
@@ -101,24 +100,13 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public String generateAccountNumber() {
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        int character;
-        for(int i = 0 ; i < 26 ; i++) {
-            character = random.nextInt(10);
-            sb.append(character);
-        }
 
-        return sb.toString();
-    }
 
     @Override
     public com.bank_system_project.models.User fillNewUser(com.bank_system_project.models.User user) {
-        user.setAccountNumber(generateAccountNumber());
-        user.setMeans(BigDecimal.valueOf(0));
-        user.setUsername(user.getEmial());
+//        user.setAccountNumber(generateAccountNumber());
+//        user.setMeans(BigDecimal.valueOf(0));
+//        user.setUsername(user.getEmial());
         return user;
     }
 
@@ -130,17 +118,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BigDecimal getUserMeans() {
-        return getCurrentLoggedUser().getMeans();
+        return null;// getCurrentLoggedUser().getMeans();
     }
 
     @Override
     public com.bank_system_project.models.User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+
     }
 
     @Override
     public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @Override
+    public boolean isExist(long id) {
+        return userRepository.existsById(id);
     }
 
 }

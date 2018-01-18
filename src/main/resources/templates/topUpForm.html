@@ -10,7 +10,16 @@
 <div th:replace="shared/header :: header('home')"/>
 
 <div class="container">
-
+    <div th:if="${param.numberErr}">
+        <div class="alert alert-info">
+            Podane numery różnią się!
+        </div>
+    </div>
+    <div th:if="${param.networkErr}">
+        <div class="alert alert-info">
+            Nie wybrano sieci!
+        </div>
+    </div>
     <h1>Nowe Doładowanie</h1>
     <form th:method="POST" th:object="${topUp}" th:action="@{/topUpForm.html}">
         <fieldset>

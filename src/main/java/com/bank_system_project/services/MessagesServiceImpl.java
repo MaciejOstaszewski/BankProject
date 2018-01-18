@@ -23,6 +23,11 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+    public void delete(long id) {
+        messagesRepository.deleteById(id);
+    }
+
+    @Override
     public List<Messages> getAllUserMessages(String username) {
         return messagesRepository.findAllByUserUsername(username);
     }

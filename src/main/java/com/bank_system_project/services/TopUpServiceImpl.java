@@ -1,6 +1,7 @@
 package com.bank_system_project.services;
 
 
+import com.bank_system_project.exceptions.MobileNetworkNotFoundException;
 import com.bank_system_project.models.MobileNetwork;
 import com.bank_system_project.models.TopUp;
 import com.bank_system_project.repositories.MobileNetworkRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopUpServiceImpl implements TopUpService{
@@ -28,4 +30,13 @@ public class TopUpServiceImpl implements TopUpService{
     public List<MobileNetwork> getAllMobileNetwork() {
         return mobileNetworkRepository.findAll();
     }
+
+    @Override
+    public String getMobileNetworkName(long id) {
+        Optional<MobileNetwork> optionalMobileNetwork = mobileNetworkRepository.findById(id);
+        MobileNetwork mobileNetwork = optionalMobileNetwork.orElseThrow(() -> new MobileNetworkNotFoundException(id));
+        return mobileNetwork.getName();
+    }
+
+
 }

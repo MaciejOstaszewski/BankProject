@@ -20,7 +20,7 @@
                 </div>
                 <div th:if="${param.transferSuccess}">
                     <div class="alert alert-info">
-                        Dodano przelew
+                        Pomyślnie zapisano przelew
                     </div>
                 </div>
                 <div th:if="${param.newMessageSuccess}">
@@ -28,6 +28,22 @@
                         Pomyślnie wysłano wiadomość
                     </div>
                 </div>
+                <div th:if="${param.templateSuccess}">
+                    <div class="alert alert-info">
+                        Pomyślnie dodano szablon
+                    </div>
+                </div>
+                <div th:if="${param.transferSendSuccess}">
+                    <div class="alert alert-info">
+                        Pomyślnie wysłano przelew
+                    </div>
+                </div>
+                <div th:if="${param.transferErr}">
+                    <div class="alert alert-info">
+                        Brak wystarczających środków na koncie!
+                 </div>
+                    </div>
+
     </span>
 </div>
 <div th:replace="shared/footer :: footer"></div>

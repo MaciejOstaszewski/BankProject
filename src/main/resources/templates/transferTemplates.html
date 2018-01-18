@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Szablony</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <div>
+
+        <a th:href="@{/transferTemplateForm.html}" class="btn btn-lg btn-primary btn-block">Nowy Szablon</a>
+
+    </div>
+
+    <h1>Zrób przelew za pomocą szablonu</h1>
+    <form th:method="POST" th:object="${TransferTemplate}" th:action="@{/transferTemplates.html}">
+        <fieldset>
+            <div class="form-group">
+                <label for="templates">Wybierz szablon </label>
+                <select id="templates" th:field="*{templateId}" class="form-control">
+                    <option th:each="template : ${templates}"
+                            th:value="${template.id}"
+                            th:text=" ${template.templateName}"
+                    />
+                </select>
+
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Dalej"/>
+            </div>
+
+        </fieldset>
+    </form>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>
