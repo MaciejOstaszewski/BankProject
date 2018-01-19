@@ -30,6 +30,12 @@ public class MessageController {
     @Autowired
     UserService userService;
 
+
+    /**
+     * Formularz na nową wiadomość
+     * @param model obiekt do formularza
+     * @return strona z formularzem
+     */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/messageForm.html", method = RequestMethod.GET)
     public String messageForm(Model model){
@@ -39,6 +45,11 @@ public class MessageController {
         return "messageForm";
     }
 
+    /**
+     * Zapisuje wiadomość
+     * @param m wiadomość pobrana z formularza
+     * @return strona główna z komunikatem
+     */
     @RequestMapping(value = "/messageForm.html", method = RequestMethod.POST)
     public String processMessageForm(@ModelAttribute("message") Messages m){
         if (userService.getUserByUsername(m.getUser().getUsername()) == null ) {
@@ -54,6 +65,12 @@ public class MessageController {
         return "redirect:/?newMessageSuccess";
     }
 
+
+    /**
+     * Wyświetla strone z wiadomościami
+     * @param model przechowuje list wiadomości
+     * @return strona z wiadomościami
+     */
     @RequestMapping(value = "/messages.html", method = RequestMethod.GET)
     public String showMessages(Model model){
 
@@ -62,6 +79,13 @@ public class MessageController {
         return "messages";
     }
 
+
+    /**
+     * Wyświetla strone z treścią wiadomości
+     * @param model przechowuje wiadomość
+     * @param cid id wiadomości, której treść ma zostać wyświetlona
+     * @return strona z treścią wiadomości
+     */
     @RequestMapping(value = "/messages.html", params = "cid", method = RequestMethod.GET)
     public String showMessageContent(Model model, long cid){
 
@@ -70,6 +94,12 @@ public class MessageController {
         return "messageContent";
     }
 
+
+    /**
+     * Usuwa wiadomość
+     * @param did id wiadomości, która ma zostać usunięta
+     * @return przekierowuje na strone z wiadomościami
+     */
     @RequestMapping(value = "/messages.html", params = "did", method = RequestMethod.GET)
     public String deleteMessagelong(long did){
         messagesService.delete(did);

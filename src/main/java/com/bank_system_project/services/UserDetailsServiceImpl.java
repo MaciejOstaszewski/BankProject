@@ -24,12 +24,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     UserDetailsRepository userDetailsRepository;
 
-
+    /**
+     * Zapisuje dane użytkowika do bazy
+     * @param userDetails dane użytkowika do zapisania
+     */
     @Override
     public void save(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
     }
 
+
+    /**
+     * Uzupełnia i zapisuje dane użytkowika do bazy
+     * @param userDetails dane użytkowika do zapisania
+     */
     @Override
     public void fillAndSave(UserDetails userDetails) {
         userDetails.setAccountNumber(generateAccountNumber());
@@ -38,6 +46,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     }
 
+    /**
+     * Pobiera dane użtkownika
+     * @param id id danych uzytkownika
+     * @throws UserNotFoundException nie znaleziono uzytkownika o danym id
+     * @return dane użytkownika o danym id
+     */
     @Override
     public UserDetails getOne(long id) {
         Optional<UserDetails> optionalUserDetails = userDetailsRepository.findById(id);
@@ -45,6 +59,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDetails;
     }
 
+
+    /**
+     * Generuje numer konta nowego użytkownika
+     * @return numer konta
+     */
     @Override
     public String generateAccountNumber() {
         Random random = new Random();

@@ -35,21 +35,10 @@ public class CashFlowController {
 
 
     /**
-     * Returns an Image object that can then be painted on the screen.
-     * The url argument must specify an absolute {@link URL}. The name
-     * argument is a specifier that is relative to the url argument.
-     * <p>
-     * This method always returns immediately, whether or not the
-     * image exists. When this applet attempts to draw the image on
-     * the screen, the data will be loaded. The graphics primitives
-     * that draw the image will incrementally paint on the screen.
-     *
-     * @param  model  an absolute URL giving the base location of the image
-     * @param  name the location of the image, relative to the url argument
-     * @return      the image at the specified URL
-     * @see
+     * Zwraca widok formularza na date
+     * @param  model  Zawiera pusty obiekt do formularza
+     * @return  widok Formularza
      */
-
     @RequestMapping(value = "/cashFlow.html", method = RequestMethod.GET)
     public String cashFlowDateForm(Model model) {
         model.addAttribute("cashFlowDate", new CashFlowDate());
@@ -57,6 +46,11 @@ public class CashFlowController {
         return "cashFlow.html";
     }
 
+    /**
+     * Zawraca sume wydatków z danego miesiąca
+     * @param  d  data pobrana z formularza
+     * @return  widok Formularza wraz z przepływem z danego miesiąca
+     */
     @RequestMapping(value = "/cashFlow.html", method = RequestMethod.POST)
     public String searchCashFlows(@ModelAttribute("cashFlowDate") CashFlowDate d) {
 

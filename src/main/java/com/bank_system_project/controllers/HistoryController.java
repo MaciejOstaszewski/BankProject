@@ -26,7 +26,11 @@ public class HistoryController {
     @Autowired
     TransactionsHistoryService transactionsHistoryService;
 
-
+    /**
+     * Pobiera liste tranzakcji użytkownika
+     * @param  model  przechowuje historie danego uzytkownika oraz pusty obiekt do formularza
+     * @return  widok formularza na przedział czasowy oraz liste transakcjii
+     */
     @RequestMapping(value = "/transactionHistory.html", method = RequestMethod.GET)
     public String transactionsHistoryList(Model model){
 
@@ -36,6 +40,13 @@ public class HistoryController {
         return "transactionsHistory";
     }
 
+    /**
+     * Pobiera liste transakcji użytkownika
+     * @param  model  przechowuje historie danego uzytkownika z zadanego przedzialu czasowego
+     * @param d data pobrana z formularza
+     * @return lista transakcji z wybranego przedzialu czasowego
+     * @return widok z informacją o błędzie
+     */
     @RequestMapping(value = "/transactionsHistory.html", method = RequestMethod.POST)
     public String transactionsHistoryDates(Model model, @ModelAttribute("dates") CashFlowDate d){
         if (d.getDate1().getTime() > d.getDate2().getTime()){

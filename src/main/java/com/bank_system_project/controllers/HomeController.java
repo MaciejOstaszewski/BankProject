@@ -20,7 +20,11 @@ public class HomeController {
     @Autowired
     UserService userService;
 
-
+    /**
+     * Wyświetla strone główną
+     * @param model przechowuje stan konat użytkownika
+     * @return strona główna
+     */
     @RequestMapping(value = "/")
     public String showHomeSite(Model model) {
         if (!userService.getUsername().equals("admin")) {

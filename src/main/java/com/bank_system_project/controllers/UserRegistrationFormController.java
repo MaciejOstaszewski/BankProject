@@ -32,7 +32,11 @@ public class UserRegistrationFormController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
+    /**
+     * Wyświetla formularz rejestracji
+     * @param model przechowuje pusty obiekt użytkownika do formularza
+     * @return strona z formularzem rejestracji
+     */
     @GetMapping("/registrationForm.html")
     public String registration(Model model) {
         model.addAttribute("userFormObject", new UserFormObject());
@@ -40,7 +44,13 @@ public class UserRegistrationFormController {
     }
 
 
-
+    /**
+     * Uzupełnia dane i zapisuje użytkownika
+     * @param userFormObject przechowuje dane użytkownika pobrane z formularza
+     * @param bindingResult przechowuje błędy rejestracji
+     * @return strona z formularzem rejestracji
+     * @return strona z informacją o prawidłowej rejestracji
+     */
     @PostMapping("/registrationForm.html")
     public String registration(@Valid @ModelAttribute("userFormObject") UserFormObject userFormObject, BindingResult bindingResult) {
 

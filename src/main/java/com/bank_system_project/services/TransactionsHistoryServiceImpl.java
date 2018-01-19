@@ -32,7 +32,10 @@ public class TransactionsHistoryServiceImpl implements TransactionsHistoryServic
     @Autowired
     UserService userService;
 
-
+    /**
+     * Zapisuje transakcje do bazy
+     * @param transfer porzelew do zapisania w historii
+     */
     @Override
     public void save(Transfer transfer) {
         TransactionsHistory transactionsHistory = new TransactionsHistory();
@@ -46,6 +49,10 @@ public class TransactionsHistoryServiceImpl implements TransactionsHistoryServic
 
     }
 
+    /**
+     * Zapisuje transakcje do bazy
+     * @param topUp doładowanie do zapisania w historii
+     */
     @Override
     public void save(TopUp topUp) {
         TransactionsHistory transactionsHistory = new TransactionsHistory();
@@ -59,11 +66,20 @@ public class TransactionsHistoryServiceImpl implements TransactionsHistoryServic
         transactionsHistoryRepository.save(transactionsHistory);
     }
 
+
+    /**
+     * Pobiera historię transakcji
+     * @return lista sieci komórkowych
+     */
     @Override
     public List<TransactionsHistory> getAll(String name) {
         return transactionsHistoryRepository.findAllByUserUsername(name);
     }
 
+    /**
+     * Pobiera historię transakcji z zadanego przedziału czasowego
+     * @return lista sieci komórkowych
+     */
     @Override
     public List<TransactionsHistory> getAllByTimeInterval(String name, Date date1, Date date2) {
         return transactionsHistoryRepository.findAllTransactionsHistory(name, date1, date2);

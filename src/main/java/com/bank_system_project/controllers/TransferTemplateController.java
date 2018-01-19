@@ -29,7 +29,11 @@ public class TransferTemplateController {
     @Autowired
     TransferTemplateService transferTemplateService;
 
-
+    /**
+     * Wyświetla formularz na szablon
+     * @param model przechowuje pusty obiekt na szablon
+     * @return strona z formularzem na szablon
+     */
     @RequestMapping(value = "/transferTemplateForm.html", method = RequestMethod.GET)
     public String transferTemplateForm(Model model){
 
@@ -38,7 +42,11 @@ public class TransferTemplateController {
         return "transferTemplateForm";
     }
 
-
+    /**
+     * Zapisuje nowy szablon do przelewu
+     * @param t szablon do zapisu
+     * @return przkierowanie na strone z informacją o sukcesie
+     */
     @RequestMapping(value = "/transferTemplateForm.html", method = RequestMethod.POST)
     public String processTransferTemplateForm(@ModelAttribute("transferTemplate") TransferTemplate t){
 
@@ -48,6 +56,12 @@ public class TransferTemplateController {
         return "redirect:/?templateSuccess";
     }
 
+
+    /**
+     * Wyświetla strone z szablonami
+     * @param model pusty obiekt na szablon
+     * @return strona z szablonami
+     */
     @RequestMapping(value = "/transferTemplates.html", method = RequestMethod.GET)
     public String transferTemplateList(Model model){
         model.addAttribute("TransferTemplate", new TransferTemplate());
@@ -56,6 +70,13 @@ public class TransferTemplateController {
         return "transferTemplates";
     }
 
+
+    /**
+     * Wyświetla formularz na przelew z danymi z szablonu
+     * @param model przechowuje szablon
+     * @param t wybrany szablon
+     * @return strona z formularzem na przelew
+     */
     @RequestMapping(value = "/transferTemplates.html", method = RequestMethod.POST)
     public String getTrensferFromTemplate(Model model, @ModelAttribute("TransferTemplate") TransferTemplate t){
 
@@ -73,9 +94,12 @@ public class TransferTemplateController {
         return "transferForm.html";
     }
 
+    /**
+     * Pobiera liste szablonów
+     * @return lista szablonów
+     */
     @ModelAttribute("templates")
     public List<TransferTemplate> loadTemplates(){
-        List s = transferTemplateService.getAllTransferTemplates(userService.getUsername());
         return transferTemplateService.getAllTransferTemplates(userService.getUsername());
     }
 
