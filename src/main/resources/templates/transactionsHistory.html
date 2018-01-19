@@ -8,6 +8,38 @@
 <div th:replace="shared/header :: header('home')"/>
 
 <div id="main" class="container">
+    <div th:if="${param.wrongDates}">
+        <div class="alert alert-info">
+            1 data nie może być większa od drugiej
+        </div>
+    </div>
+    Podaj przedział czasowy:
+    <form th:method="POST" th:object="${dates}" th:action="@{/transactionsHistory.html}">
+        <fieldset>
+            <div class="form-group">
+                <label for="date1">Od </label>
+                <input id="date1" type="date" th:field="*{date1}"  required="true">
+            </div>
+            <div class="form-group">
+                <label for="date2">Do </label>
+                <input id="date2" type="date" th:field="*{date2}" required="true">
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Pokarz"/>
+            </div>
+
+            <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"/>
+
+
+        </fieldset>
+    </form>
+    <div th:if="${transactionsHistoryList.size()} == 0">
+        <h1>Brak Transakcji</h1>
+    </div>
 
     <div th:if="${transactionsHistoryList.size()} != 0">
         <h1>Historia Transakcjii</h1>

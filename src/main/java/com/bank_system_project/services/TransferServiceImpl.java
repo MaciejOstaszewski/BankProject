@@ -1,3 +1,9 @@
+/**
+ * <h1>Bank Project</h1>
+ * @author  Maciej Ostaszewski
+ * @version 1.0
+ * @since   2017-12-01
+ */
 package com.bank_system_project.services;
 
 
@@ -34,9 +40,11 @@ public class TransferServiceImpl implements TransferService {
 
 
     @Override
-    public List<Transfer> getCurrentLoggedUserTransfers(String username) {
-        return transferRepository.findAllByUserUsername(username);
+    public List<Transfer> getCurrentLoggedUserTransfers(String username, boolean repeat) {
+        return transferRepository.findAllByUserUsername(username, repeat);
     }
+
+
 
     @Override
     public Transfer getOne(long id) {

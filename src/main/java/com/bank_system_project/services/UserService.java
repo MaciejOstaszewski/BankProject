@@ -1,3 +1,9 @@
+/**
+ * <h1>Bank Project</h1>
+ * @author  Maciej Ostaszewski
+ * @version 1.0
+ * @since   2017-12-01
+ */
 package com.bank_system_project.services;
 
 import com.bank_system_project.models.User;
@@ -15,7 +21,7 @@ public interface UserService extends UserDetailsService {
 
     boolean isUniqueLogin(String login);
 
-    List<User> getAllUsers();
+
 
     List<User> findDisabled();
 
@@ -24,17 +30,12 @@ public interface UserService extends UserDetailsService {
     User getUserById(long id);
 
 
-
-    User fillNewUser(User user);
-
     User getCurrentLoggedUser();
 
-    BigDecimal getUserMeans();
 
     User getUserByUsername(String username);
 
     String getUsername();
 
-    boolean isExist(long id);
 
 }

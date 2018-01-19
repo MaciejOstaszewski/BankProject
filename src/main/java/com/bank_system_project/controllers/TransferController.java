@@ -1,3 +1,9 @@
+/**
+ * <h1>Bank Project</h1>
+ * @author  Maciej Ostaszewski
+ * @version 1.0
+ * @since   2017-12-01
+ */
 package com.bank_system_project.controllers;
 
 
@@ -47,8 +53,11 @@ public class TransferController {
     public String processTransferForm(@ModelAttribute("transfer") Transfer t){
 
         t.setExecutionDate(new Date());
-
-        t.setStatus("Oczekujący");
+        if (t.isRepeat()) {
+            t.setStatus("Aktywny");
+        } else {
+            t.setStatus("Oczekujący");
+        }
         t.setUser(userService.getCurrentLoggedUser());
         transferService.save(t);
         return "redirect:/?transferSuccess";
@@ -57,7 +66,7 @@ public class TransferController {
     @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
     public String transferList(Model model){
 
-        model.addAttribute("transfersList", transferService.getCurrentLoggedUserTransfers(userService.getUsername()));
+        model.addAttribute("transfersList", transferService.getCurrentLoggedUserTransfers(userService.getUsername(), false));
 
         return "transfers.html";
     }
@@ -100,6 +109,33 @@ public class TransferController {
         model.addAttribute("transfer", transferService.getOne(eid));
 
         return "transferForm.html";
+    }
+    @RequestMapping(value = "/transfers.html", params = "rid", method = RequestMethod.GET)
+    public String returnTransfer(Model model, long rid){
+
+        Transfer transfer = transferService.getOne(rid);
+        transfer.setStatus("Aktywny");
+        transferService.save(transfer);
+
+        return "redirect:/transfersRepeat.html";
+    }
+    @RequestMapping(value = "/transfers.html", params = "cid", method = RequestMethod.GET)
+    public String cancelTransfer(Model model, long cid){
+
+        Transfer transfer = transferService.getOne(cid);
+        transfer.setStatus("Anulowany");
+        transferService.save(transfer);
+
+        return "redirect:/transfersRepeat.html";
+    }
+
+
+    @RequestMapping(value = "/transfersRepeat.html", method = RequestMethod.GET)
+    public String transfersRepeatList(Model model){
+
+        model.addAttribute("transfersRepeatList", transferService.getCurrentLoggedUserTransfers(userService.getUsername(), true));
+
+        return "transfersRepeat";
     }
 
 

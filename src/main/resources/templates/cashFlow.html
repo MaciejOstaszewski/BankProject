@@ -50,6 +50,20 @@
 
         </fieldset>
     </form>
+    <div class="cashFlow" th:if="${param.cashFlowNone}">
+        <div class="alert alert-info">
+            Brak Transakcji
+
+        </div>
+    </div>
+    <div class="cashFlow" th:if="${param.cashFlow}">
+        <div class="alert alert-info">
+            Przychody - 0.00 PLN
+            <br />
+            Wydatki - <span th:text="${#numbers.formatDecimal(param.cashFlow,1,2,'COMMA')}"></span> PLN
+
+        </div>
+    </div>
 </div>
 <div th:replace="shared/footer :: footer"></div>
 </body>

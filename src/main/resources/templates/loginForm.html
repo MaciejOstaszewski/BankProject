@@ -14,7 +14,7 @@
             <form th:method="POST" th:action="@{/login}">
                 <div th:if="${param.error}">
                     <div class="alert alert-danger">
-                        Nieprawidłowa nazwa użytkownika lub hasło
+                        Nieprawidłowa nazwa użytkownika , hasło lub użytkownik jeszcze nie odblokowany!
                     </div>
                 </div>
                 <div th:if="${param.logout}">

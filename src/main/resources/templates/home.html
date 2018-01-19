@@ -10,7 +10,7 @@
 <div id="main" class="container">
     <span style="font-size: 30pt">
         Strona główna
-
+        <h1 sec:authorize="hasRole('ROLE_ADMIN')" th:text="${admin}"></h1>
         <h1 sec:authorize="hasRole('ROLE_USER')">Twoje środki: [[${#numbers.formatDecimal(means,1,2,'COMMA')}]] PLN</h1>
 
                 <div th:if="${param.topUpSuccess}">
