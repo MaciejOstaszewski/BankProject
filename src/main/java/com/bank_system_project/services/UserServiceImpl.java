@@ -8,6 +8,7 @@ package com.bank_system_project.services;
 
 
 import com.bank_system_project.configuration.ProfileNames;
+import com.bank_system_project.exceptions.TemplateNotFoundException;
 import com.bank_system_project.exceptions.UserNotFoundException;
 import com.bank_system_project.models.Role;
 import com.bank_system_project.repositories.RoleRepository;
@@ -44,6 +45,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Sprawdza autentykacje użytkownika poodczas logowania
+     * @param username nazwa logującego się użytkownika
+     * @throws UsernameNotFoundException nie znaleziono uzytkownika o danej nazwie
+     * @return dane uwierzytelniające użytkownika
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,6 +73,11 @@ public class UserServiceImpl implements UserService {
         return new User(user.getUsername(), user.getPassword(), grantedAuthorities);//klasa ma też drugi konstruktor – więcej parametrów
     }
 
+
+    /**
+     * ustawia role użytkownikowi, tworzy hasz hasła i zapisuje użytkownika do bazy
+     * @param user użytkownik do zapisania
+     */
     @Override
     public void save(com.bank_system_project.models.User user) {
 
@@ -76,28 +88,51 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
     }
 
+    /**
+     * Aktualizuje użytkownika
+     * @param user użtykownik do zaktualizowania
+     */
     @Override
     public void update(com.bank_system_project.models.User user) {
         userRepository.save(user);
     }
 
+    /**
+     * Sprawdza czy nazwa użtkownika jest unikalna
+     * @param username nazwa użytkonika do sprawdzenia
+     * @return informacja o tym czy nazwa jest unikalna
+     */
     @Override
     public boolean isUniqueLogin(String username) {
         return userRepository.findByUsername(username) == null;
     }
 
 
-
+    /**
+     * Pobiera liste zablokowanych użtykowników
+     * @return lista zablokowanych użtykowników
+     */
     @Override
     public List<com.bank_system_project.models.User> findDisabled() {
         return userRepository.findAllByEnabledIsFalse();
     }
 
+
+    /**
+     * Usuwa użytkownika
+     * @param id id użytkonika do usunięcia
+     */
     @Override
     public void deleteUserById(long id) {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Pobiera użtkownika
+     * @param id id uzytkownika
+     * @throws UserNotFoundException nie znaleziono uzytkownika o danym id
+     * @return użytkownik o danym id
+     */
     @Override
     public com.bank_system_project.models.User getUserById(long id) {
         Optional<com.bank_system_project.models.User> optionalUser = userRepository.findById(id);
@@ -105,19 +140,30 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * Pobiera aktualnie zalogowaniego użtkownika
+     * @return aktualnie zalogowany użtkownik
+     */
     @Override
     public com.bank_system_project.models.User getCurrentLoggedUser() {
         auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByUsername(auth.getName());
     }
 
-
+    /**
+     * Pobiera użtkownika
+     * @param username nazwa uzytkownika
+     * @return użytkownik o danej nazwie
+     */
     @Override
     public com.bank_system_project.models.User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
 
     }
-
+    /**
+     * Pobiera nazwe zagogowanego użtkownika
+     * @return nazwa użytkownika
+     */
     @Override
     public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

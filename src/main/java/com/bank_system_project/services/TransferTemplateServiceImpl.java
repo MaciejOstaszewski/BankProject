@@ -8,6 +8,7 @@ package com.bank_system_project.services;
 
 import com.bank_system_project.exceptions.MessageNotFoundException;
 import com.bank_system_project.exceptions.TemplateNotFoundException;
+import com.bank_system_project.exceptions.TransferNotFoundException;
 import com.bank_system_project.models.Messages;
 import com.bank_system_project.models.TransferTemplate;
 import com.bank_system_project.repositories.TransferTemplateRepository;
@@ -23,16 +24,32 @@ public class TransferTemplateServiceImpl implements TransferTemplateService {
     @Autowired
     TransferTemplateRepository transferTemplateRepository;
 
-    @Override
+    /**
+     * Zapisuje szablon do bazy
+     * @param transferTemplate szablon do zapisania
+     */  @Override
     public void save(TransferTemplate transferTemplate) {
         transferTemplateRepository.save(transferTemplate);
     }
 
+
+    /**
+     * Pobiera liste transakcji
+     * @param name nazwa zalogowanego użytkonika
+     * @return lista transakcji
+     */
     @Override
     public List<TransferTemplate> getAllTransferTemplates(String name) {
         return transferTemplateRepository.findAllByUserUsername(name);
     }
 
+
+    /**
+     * Pobiera szablon
+     * @param id id szablonu
+     * @throws TemplateNotFoundException nie znaleziono szablonu o danym id
+     * @return szablon o danym id
+     */
     @Override
     public TransferTemplate getOne(long id) {
         Optional<TransferTemplate> optionalTemplate = transferTemplateRepository.findById(id);

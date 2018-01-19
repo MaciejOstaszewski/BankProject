@@ -28,24 +28,42 @@ public class TransferServiceImpl implements TransferService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Zapisuje przelew do bazy
+     * @param transfer przelew do zapisania
+     */
     @Override
     public void save(Transfer transfer) {
         transferRepository.save(transfer);
     }
 
+    /**
+     * Usuwa przelew z bazy
+     * @param id id przelewu
+     */
     @Override
     public void delete(long id) {
         transferRepository.deleteById(id);
     }
 
 
+    /**
+     * Pobiera liste przelewów
+     * @param username nazwa aktualnie zalogowaniego użytkownika
+     * @param repeat informacja o tym czy pobrać przelewy czy zlecenia stałe
+     * @return lista przelewów
+     */
     @Override
     public List<Transfer> getCurrentLoggedUserTransfers(String username, boolean repeat) {
         return transferRepository.findAllByUserUsername(username, repeat);
     }
 
-
-
+    /**
+     * Pobiera przelew
+     * @param id id przelewu
+     * @throws TransferNotFoundException nie znaleziono przelewu o danym id
+     * @return przelew o danym id
+     */
     @Override
     public Transfer getOne(long id) {
         Optional<Transfer> optionalTransfer = transferRepository.findById(id);

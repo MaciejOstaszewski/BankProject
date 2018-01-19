@@ -25,7 +25,11 @@ public class UserAcceptController {
     @Autowired
     UserService userService;
 
-
+    /**
+     * Wyświetla strone z zablokowanymi użytkownikami
+     * @param model przechowuje liste zablokowanych użytkowników
+     * @return strona z listą zablokowanych użytkowników
+     */
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "userAccept.html")
     public String disabledUsersList(Model model){
@@ -33,6 +37,11 @@ public class UserAcceptController {
         return "usersAccept";
     }
 
+    /**
+     * Odblokowuje wybranego użytkownika
+     * @param eid przechowuje id użytkownika do odblokowania
+     * @return przkierowuje na liste zablokowanych użytkowników
+     */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "userAccept.html", params = {"eid"}, method = RequestMethod.GET)
     public String enableUser(long eid){
@@ -44,6 +53,11 @@ public class UserAcceptController {
         return "redirect:userAccept.html";
     }
 
+    /**
+     * Usuwa wybranego użytkownika
+     * @param did przechowuje id użytkownika do usunięcia
+     * @return przkierowuje na liste zablokowanych użytkowników
+     */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "userAccept.html", params = {"did"}, method = RequestMethod.GET)
     public String deleteUser(long did){

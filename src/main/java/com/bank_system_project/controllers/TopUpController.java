@@ -43,6 +43,12 @@ public class TopUpController {
     @Autowired
     UserDetailsService userDetailsService;
 
+
+    /**
+     * Wyświetla strone z formularzem na doładowanie
+     * @param model przechowuje obiekt do formularza
+     * @return strona z formularzem
+     */
     @RequestMapping(value = "/topUpForm.html", method = RequestMethod.GET)
     public String topUpForm(Model model){
 
@@ -51,8 +57,16 @@ public class TopUpController {
         return "topUpForm.html";
     }
 
+    /**
+     * Zapisuje dołądowanie, zmienia stan konta użytkownika
+     * @param t obiekt doładowania z formularza
+     * @param bindingResult zawiera błędy z formularza
+     * @return strona z formularzem na doladowanie
+     * @return strona z informacją o błędzie
+     * @return strona z informacją o sukcesie
+     */
     @RequestMapping(value = "/topUpForm.html", method = RequestMethod.POST)
-    public String processTopUpForm(Model model, @Valid @ModelAttribute("topUp") TopUp t, BindingResult bindingResult){
+    public String processTopUpForm(@Valid @ModelAttribute("topUp") TopUp t, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return "topUpForm.html";
         }
@@ -75,7 +89,10 @@ public class TopUpController {
 
         return "redirect:/?topUpSuccess";
     }
-
+    /**
+     * Pobiera liste sieci komórkowych
+     * @return lista sieci
+     */
     @ModelAttribute("mobileNetworks")
     public List<MobileNetwork> loadMobileNetworks(){
         return topUpService.getAllMobileNetwork();

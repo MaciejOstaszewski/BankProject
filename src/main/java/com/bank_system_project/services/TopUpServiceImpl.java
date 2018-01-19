@@ -27,16 +27,32 @@ public class TopUpServiceImpl implements TopUpService{
     @Autowired
     MobileNetworkRepository mobileNetworkRepository;
 
+
+    /**
+     * Zapisuje doładowanie do bazy
+     * @param topUp doładowanie do zapisania
+     */
     @Override
     public void save(TopUp topUp) {
         topUpRepository.save(topUp);
     }
 
+
+    /**
+     * Pobiera listę sieci komórkowych
+     * @return lista sieci komórkowych
+     */
     @Override
     public List<MobileNetwork> getAllMobileNetwork() {
         return mobileNetworkRepository.findAll();
     }
 
+    /**
+     * Pobiera nazwe sieci komórkowej
+     * @param id id wybranej sieci
+     * @throws MobileNetworkNotFoundException nie znaleziono sieci o danym id
+     * @return nazwa sieci
+     */
     @Override
     public String getMobileNetworkName(long id) {
         Optional<MobileNetwork> optionalMobileNetwork = mobileNetworkRepository.findById(id);

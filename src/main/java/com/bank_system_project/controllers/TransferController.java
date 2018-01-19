@@ -40,6 +40,12 @@ public class TransferController {
     @Autowired
     UserDetailsService userDetailsService;
 
+    /**
+     * Wyświetla strone z formularzem
+     * @param model pusty obiekt do formularza
+     * @param repeat zawiera informacje o tym czy zwrócic widok formularza na przelew czy zlecenie stałe
+     * @return strona z formularzem na przelew
+     */
     @RequestMapping(value = "/transferForm.html", params = "repeat", method = RequestMethod.GET)
     public String transferRepeatForm(Model model, boolean repeat){
 
@@ -48,7 +54,11 @@ public class TransferController {
         return "transferForm.html";
     }
 
-
+    /**
+     * Ustawia odpowiednie pola i zapisuje przelew
+     * @param t obiekt przelewu pobrany z formularza
+     * @return strona z informacją o sukcesie
+     */
     @RequestMapping(value = "/transferForm.html", method = RequestMethod.POST)
     public String processTransferForm(@ModelAttribute("transfer") Transfer t){
 
@@ -62,7 +72,11 @@ public class TransferController {
         transferService.save(t);
         return "redirect:/?transferSuccess";
     }
-
+    /**
+     * Wyświetla strone z przelewami
+     * @param model przechouje liste przelewów
+     * @return strona z listą przelewów
+     */
     @RequestMapping(value = "/transfers.html", method = RequestMethod.GET)
     public String transferList(Model model){
 
@@ -71,7 +85,14 @@ public class TransferController {
         return "transfers.html";
     }
 
-
+    /**
+     * Wysyła przelew, aktualizuje stan kona użytkownika,
+     * sprawdza czy użytkownik ma odpowiednią liczbę środków na koncie
+     * @param model przechouje przelew
+     * @param sid id przelewu do wysłania
+     * @return strona z informacją o sukcesie
+     * @return strona z informacją o braku wystarczających środków
+     */
     @RequestMapping(value = "/transfers.html", params = "sid", method = RequestMethod.GET)
     public String sendTransfer(Model model, long sid){
 
@@ -96,13 +117,27 @@ public class TransferController {
 
         return "redirect:/?transferSendSuccess";
     }
+
+
+    /**
+     * Usuwa przelew
+     * @param did id przelewu do usunięcia
+     * @return przekierowanie na strone z przelewami
+     */
     @RequestMapping(value = "/transfers.html", params = "did", method = RequestMethod.GET)
-    public String deleteTransfer(Model model, long did){
+    public String deleteTransfer(long did){
 
         transferService.delete(did);
 
         return "redirect:/transfers.html";
     }
+
+    /**
+     * Pobiera przelew do edycji
+     * @param model przechouje przelew
+     * @param eid id przelewu do edycji
+     * @return strona z formularzem na przelew
+     */
     @RequestMapping(value = "/transfers.html", params = "eid", method = RequestMethod.GET)
     public String editTransfer(Model model, long eid){
 
@@ -110,8 +145,15 @@ public class TransferController {
 
         return "transferForm.html";
     }
+
+
+    /**
+     * Pobiera zlecenie stałe do wznowienia
+     * @param rid id zlecenia stałego do wznowienia
+     * @return strona ze zleceniami stałymi
+     */
     @RequestMapping(value = "/transfers.html", params = "rid", method = RequestMethod.GET)
-    public String returnTransfer(Model model, long rid){
+    public String returnTransfer(long rid){
 
         Transfer transfer = transferService.getOne(rid);
         transfer.setStatus("Aktywny");
@@ -119,8 +161,14 @@ public class TransferController {
 
         return "redirect:/transfersRepeat.html";
     }
+
+    /**
+     * Pobiera zlecenie stałe do anulowania
+     * @param cid id zlecenia stałego do anulowania
+     * @return strona ze zleceniami stałymi
+     */
     @RequestMapping(value = "/transfers.html", params = "cid", method = RequestMethod.GET)
-    public String cancelTransfer(Model model, long cid){
+    public String cancelTransfer(long cid){
 
         Transfer transfer = transferService.getOne(cid);
         transfer.setStatus("Anulowany");
@@ -129,7 +177,11 @@ public class TransferController {
         return "redirect:/transfersRepeat.html";
     }
 
-
+    /**
+     * Pobiera liste zleceń stałych
+     * @param model przechowuje liste zleceń stałych
+     * @return strona ze zleceniami stałymi
+     */
     @RequestMapping(value = "/transfersRepeat.html", method = RequestMethod.GET)
     public String transfersRepeatList(Model model){
 
