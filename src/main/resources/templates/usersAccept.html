@@ -26,10 +26,10 @@
 
 
             <td th:text="${user.id}"></td>
-            <td th:text="${user.firstname}"></td>
-            <td th:text="${user.surname}"></td>
-            <td th:text="${user.emial}"></td>
-            <td th:text="${user.adress}"></td>
+            <td th:text="${user.userDetails.firstname}"></td>
+            <td th:text="${user.userDetails.surname}"></td>
+            <td th:text="${user.userDetails.email}"></td>
+            <td th:text="${user.userDetails.adress}"></td>
             <td>
                 <a class="btn btn-danger" th:href="@{userAccept.html(eid=${user.id})}">Odblokuj</a>
                 <a class="btn btn-success" th:href="@{userAccept.html(did=${user.id})}">Usuń</a>

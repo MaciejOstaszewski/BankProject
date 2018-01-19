@@ -1,3 +1,9 @@
+/**
+ * <h1>Bank Project</h1>
+ * @author  Maciej Ostaszewski
+ * @version 1.0
+ * @since   2017-12-01
+ */
 package com.bank_system_project.services;
 
 
@@ -60,7 +66,7 @@ public class TransactionsHistoryServiceImpl implements TransactionsHistoryServic
 
     @Override
     public List<TransactionsHistory> getAllByTimeInterval(String name, Date date1, Date date2) {
-        return transactionsHistoryRepository.findAllByUserUsername(name, date1, date2);
+        return transactionsHistoryRepository.findAllTransactionsHistory(name, date1, date2);
     }
 
 

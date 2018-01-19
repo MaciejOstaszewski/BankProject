@@ -25,17 +25,17 @@
 
 
                 <ul class="nav navbar-nav navbar-left">
-                    <li sec:authorize="isAuthenticated()">
+                    <li sec:authorize="hasRole('ROLE_USER')">
                         <a th:href="@{/transfers.html}">Przelewy</a>
                     </li>
-                    <li sec:authorize="isAuthenticated()">
+                    <li sec:authorize="hasRole('ROLE_USER')">
                         <a th:href="@{/topUpForm.html}">Doładowania</a>
                     </li>
-                    <li sec:authorize="isAuthenticated()">
+                    <li sec:authorize="hasRole('ROLE_USER')">
                         <a th:href="@{/cashFlow.html}">Przepływy</a>
                     </li>
 
-                    <li sec:authorize="isAuthenticated()">
+                    <li sec:authorize="hasRole('ROLE_USER')">
                         <a th:href="@{/transactionHistory.html}">Historia Transakcji</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')">

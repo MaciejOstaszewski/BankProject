@@ -15,11 +15,11 @@
     </div>
 
     <div>
-        <a th:href="@{/transferForm.html(repeat=false)}" class="btn btn-lg btn-primary btn-block">Nowy Przelew</a>
-        <a th:href="@{/transfersRepeat.html(repeat=true)}" class="btn btn-lg btn-primary btn-block">Zlecenia stałe</a>
-        <a th:href="@{/transferTemplates.html}" class="btn btn-lg btn-primary btn-block">Szablony</a>
+
+        <a th:href="@{/transferForm.html(repeat=true)}" class="btn btn-lg btn-primary btn-block">Nowe Zlecenie stałe</a>
+
     </div>
-    <div th:if="${transfersList.size()} != 0">
+    <div th:if="${transfersRepeatList.size()} != 0">
         <h1>Lista przelewów</h1>
         <table class="table table-striped table-dark">
             <thead>
@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="transfer : ${transfersList}">
+            <tr th:each="transfer : ${transfersRepeatList}">
 
 
                 <td th:text="${transfer.recipientsNameAndAdress}"></td>
@@ -45,9 +45,11 @@
                 <td th:text="${transfer.title}"></td>
                 <td th:text="${#dates.format(transfer.executionDate, 'dd-MM-yyyy')}"></td>
                 <td th:text="${transfer.status}"></td>
-                <td><a class="btn btn-primary" th:href="@{transfers.html(sid=${transfer.id})}">Wyślij</a></td>
                 <td><a class="btn btn-success" th:href="@{transfers.html(eid=${transfer.id})}">Edytuj</a></td>
                 <td><a class="btn btn-danger" th:href="@{transfers.html(did=${transfer.id})}">Usuń</a></td>
+
+                <td th:if="${transfer.status.equals('Aktywny')}"><a class="btn btn-danger" th:href="@{transfers.html(cid=${transfer.id})}">Anuluj</a></td>
+                <td th:if="${transfer.status.equals('Anulowany')}"><a class="btn btn-success" th:href="@{transfers.html(rid=${transfer.id})}">Wznów</a></td>
 
 
 

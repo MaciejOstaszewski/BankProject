@@ -1,3 +1,9 @@
+/**
+ * <h1>Bank Project</h1>
+ * @author  Maciej Ostaszewski
+ * @version 1.0
+ * @since   2017-12-01
+ */
 package com.bank_system_project.services;
 
 
@@ -45,7 +51,9 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-
+        if (!user.isEnabled()){
+            throw new UsernameNotFoundException(username);
+        }
         return convertToUserDetails(user);
     }
 
@@ -78,10 +86,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username) == null;
     }
 
-    @Override
-    public List<com.bank_system_project.models.User> getAllUsers() {
-        return userRepository.findAll();
-    }
+
 
     @Override
     public List<com.bank_system_project.models.User> findDisabled() {
@@ -100,26 +105,12 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
-
-    @Override
-    public com.bank_system_project.models.User fillNewUser(com.bank_system_project.models.User user) {
-//        user.setAccountNumber(generateAccountNumber());
-//        user.setMeans(BigDecimal.valueOf(0));
-//        user.setUsername(user.getEmial());
-        return user;
-    }
-
     @Override
     public com.bank_system_project.models.User getCurrentLoggedUser() {
         auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByUsername(auth.getName());
     }
 
-    @Override
-    public BigDecimal getUserMeans() {
-        return null;// getCurrentLoggedUser().getMeans();
-    }
 
     @Override
     public com.bank_system_project.models.User getUserByUsername(String username) {
@@ -132,9 +123,6 @@ public class UserServiceImpl implements UserService {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    @Override
-    public boolean isExist(long id) {
-        return userRepository.existsById(id);
-    }
+
 
 }
